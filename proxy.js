@@ -285,9 +285,9 @@ function Server(options) { // {{{
 }
 util.inherits(Server, dgram.Socket);
 
-Server.prototype.start = function(address, callback) {
+Server.prototype.start = function( /*address, callback*/ ) {
     responseBuffer = responseBuffer || new Buffer(DNS_BUFFER_SIZE);
-    this.bind(DNS_SERVER_PORT, address, callback);
+    this.bind.apply(this, [DNS_SERVER_PORT].concat(Array.prototype.slice.call(arguments, 0)));
 }; // }}}
 
 function encodeAddress(address) { // {{{
