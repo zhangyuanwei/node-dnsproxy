@@ -278,6 +278,8 @@ var responseBuffer = null;
 function Server(options) { // {{{
     if (!(this instanceof Server)) return new Server(options);
 
+    this._bind = options.bind || false;
+    this.port = parseInt(options.port) || DNS_SERVER_PORT;
     this.addresses = (options && options.addresses) || {};
     this.cache = !! options.cache;
 
@@ -285,9 +287,14 @@ function Server(options) { // {{{
 }
 util.inherits(Server, dgram.Socket);
 
-Server.prototype.start = function( /*address, callback*/ ) {
+Server.prototype.start = function( /*callback*/ ) {
     responseBuffer = responseBuffer || new Buffer(DNS_BUFFER_SIZE);
-    this.bind.apply(this, [DNS_SERVER_PORT].concat(toArray(arguments, 0)));
+    var args = toArray(arguments);
+    if (this._bind) {
+        args.unshift(this._bind);
+    }
+    args.unshift(this.port);
+    this.bind.apply(this, args);
 }; // }}}
 
 function encodeAddress(address) { // {{{
