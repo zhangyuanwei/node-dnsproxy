@@ -1,0 +1,11 @@
+{
+    "addresses": {
+        "a.b.c": "127.0.0.1",
+        "*.b.c": "127.0.0.2",
+        "*.c": "127.0.0.3",
+        "who.am.i": "localhost",
+        "who.you.are": "proxyhost"
+    },
+    "cache": true,
+    "bind": "0.0.0.0"
+}

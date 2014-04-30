@@ -1,4 +1,4 @@
-node-dns-proxy
+node-dnsproxy
 ==============
 
 A simple DNS proxy server for Node.js
@@ -7,5 +7,5 @@ A simple DNS proxy server for Node.js
 
 ``` shell
 npm install dnsproxy
-sudo node test.js
+sudo dnsproxy dnsproxy.json
 ```

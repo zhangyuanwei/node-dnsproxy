@@ -1,17 +1,17 @@
 {
     "name": "dnsproxy",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A simple DNS proxy server for Node.js",
     "main": "proxy.js",
     "bin": {
-        "dnsproxy": "./bin/proxy"
+        "dnsproxy": "./bin/dnsproxy"
     },
     "scripts": {
-        "test": "sudo node test.js"
+        "test": "sudo node test.js dnsproxy.json"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/zhangyuanwei/node-dns-proxy.git"
+        "url": "https://github.com/zhangyuanwei/node-dnsproxy.git"
     },
     "keywords": [
         "node",
@@ -22,6 +22,6 @@
     "author": "zhangyuanwei",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/zhangyuanwei/node-dns-proxy/issues"
+        "url": "https://github.com/zhangyuanwei/node-dnsproxy/issues"
     }
 }

@@ -287,7 +287,7 @@ util.inherits(Server, dgram.Socket);
 
 Server.prototype.start = function( /*address, callback*/ ) {
     responseBuffer = responseBuffer || new Buffer(DNS_BUFFER_SIZE);
-    this.bind.apply(this, [DNS_SERVER_PORT].concat(Array.prototype.slice.call(arguments, 0)));
+    this.bind.apply(this, [DNS_SERVER_PORT].concat(toArray(arguments, 0)));
 }; // }}}
 
 function encodeAddress(address) { // {{{
@@ -304,7 +304,7 @@ function encodeAddress(address) { // {{{
 function serverMessageHandler(buf, rinfo) { // {{{
     var self = this,
         msg = new Message(buf),
-        queries, length, index, item, domains, domain,
+        queries, length, index, item, domains, domain, key, parts,
         addresses, address, answers, info;
 
     if (msg.isAnswer() || msg.opcode() != 0) return; // 非标准查询请求
@@ -323,17 +323,28 @@ function serverMessageHandler(buf, rinfo) { // {{{
     addresses = this.addresses;
     answers = [];
     length = index = domains.length;
-    while (index--) {
+
+    nextDomain: while (index--) {
         domain = domains[index];
-        if (addresses.hasOwnProperty(domain)) { //尝试直接回复
-            address = addresses[domain];
-            address = (address == "localhost" ? rinfo.address : (address == "proxyhost" ? info.address : address));
-            if (pushAnswer(domain, address)) {
-                onresolve();
-                continue;
+        key = domain;
+        parts = domain.split(".");
+
+        do {
+            if (addresses.hasOwnProperty(key)) { //尝试直接回复
+                address = addresses[key];
+                address = (address === "localhost" ? rinfo.address : (address === "proxyhost" ? info.address : address));
+                if (pushAnswer(domain, address)) {
+                    onresolve();
+                    continue nextDomain;
+                }
+            } else { // 没有直接匹配的域名,尝试添加 * 匹配
+                parts.shift();
+                key = "*." + parts.join(".");
             }
-        }
-        resolve(domain);
+
+        } while (parts.length);
+
+        resolve(domain); //向上游服务器请求地址
     }
 
     function pushAnswer(domain, address) {
