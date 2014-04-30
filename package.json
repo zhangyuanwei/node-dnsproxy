@@ -6,9 +6,6 @@
     "bin": {
         "dnsproxy": "./bin/dnsproxy"
     },
-    "scripts": {
-        "test": "sudo node test.js"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/zhangyuanwei/node-dnsproxy.git"
