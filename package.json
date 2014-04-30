@@ -1,13 +1,13 @@
 {
     "name": "dnsproxy",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "A simple DNS proxy server for Node.js",
     "main": "proxy.js",
     "bin": {
         "dnsproxy": "./bin/dnsproxy"
     },
     "scripts": {
-        "test": "sudo node test.js dnsproxy.json"
+        "test": "sudo node test.js"
     },
     "repository": {
         "type": "git",
