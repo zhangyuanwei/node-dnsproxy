@@ -4,8 +4,7 @@ node-dnsproxy
 A simple DNS proxy server for Node.js  
 一个简单的 Node.js DNS 代理服务器  
 
-## Installation
-## 安装
+## Installation 安装
 
 ``` shell
 npm install dnsproxy               # install from npm
@@ -13,8 +12,7 @@ sudo dnsproxy -a a.com:127.0.0.1 & # start dns proxy server
 dig @localhost a.com               # test the server, return 127.0.0.1
 ```
 
-## Usage
-## 使用
+## Usage 使用
 
 ``` text
 Usage: dnsproxy [-?hv] [-b address] [-p port] [-c true|false] [-a domain1:ip1 [domain2:ip2 [...]]] [-f filename]
@@ -29,16 +27,14 @@ Options:
   -f filename   : load options from file
 ```
 
-## Pan-analytic
-## 泛解析
+## Pan-analytic 泛解析
 ``` shell
 sudo dnsproxy -a *.a.com:127.0.0.1 *.b.a.com:127.0.0.2 &
 dig @localhost xx.a.com    # return 127.0.0.1
 dig @localhost xx.b.a.com  # return 127.0.0.2
 ```
 
-## Who am I
-## 我是谁
+## Who am I 我是谁
 ``` shell
 # start server on 192.168.1.1
 sudo dnsproxy -a who.am.i:localhost who.you.are:proxyhost &
