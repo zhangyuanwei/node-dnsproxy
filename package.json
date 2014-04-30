@@ -1,6 +1,6 @@
 {
     "name": "dnsproxy",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A simple DNS proxy server for Node.js",
     "main": "proxy.js",
     "bin": {
