@@ -314,6 +314,8 @@ function serverMessageHandler(buf, rinfo) { // {{{
         queries, length, index, item, domains, domain, key, parts,
         addresses, address, answers, info;
 
+    //debug(rinfo.address, ":", "------ request ------");
+
     if (msg.isAnswer() || msg.opcode() != 0) return; // 非标准查询请求
 
     queries = msg.queries;
@@ -336,7 +338,9 @@ function serverMessageHandler(buf, rinfo) { // {{{
         key = domain;
         parts = domain.split(".");
 
-        do {
+        //debug(rinfo.address, ":", "want", domain);
+
+        while (true) {
             if (addresses.hasOwnProperty(key)) { //尝试直接回复
                 address = addresses[key];
                 address = (address === "localhost" ? rinfo.address : (address === "proxyhost" ? info.address : address));
@@ -344,17 +348,23 @@ function serverMessageHandler(buf, rinfo) { // {{{
                     onresolve();
                     continue nextDomain;
                 }
-            } else { // 没有直接匹配的域名,尝试添加 * 匹配
+            } else if (parts.length) { // 没有直接匹配的域名,尝试添加 * 匹配
+                parts[0] = "*";
+                key = parts.join(".");
                 parts.shift();
-                key = "*." + parts.join(".");
+            } else {
+                break;
             }
 
-        } while (parts.length);
+        };
 
         resolve(domain); //向上游服务器请求地址
     }
 
     function pushAnswer(domain, address) {
+
+        //debug(rinfo.address, ":", domain, "->", address);
+
         var rdata = encodeAddress(address);
         if (rdata) {
             answers.push({
@@ -388,6 +398,7 @@ function serverMessageHandler(buf, rinfo) { // {{{
     }
 
     function sendResponse() {
+        //debug(rinfo.address, ":", "------ response ------");
         var length;
         msg.flags = DNS_MESSAGE_FLAG_QR | DNS_MESSAGE_FLAG_AA | DNS_MESSAGE_FLAG_RD | DNS_MESSAGE_FLAG_RA;
         msg.answers = answers;
