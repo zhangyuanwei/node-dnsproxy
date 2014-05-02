@@ -29,21 +29,26 @@ Options:
 
 ## Pan-analytic 泛解析
 ``` shell
-sudo dnsproxy -a *.a.com:127.0.0.1 *.b.a.com:127.0.0.2 &
-dig @localhost xx.a.com    # return 127.0.0.1
-dig @localhost xx.b.a.com  # return 127.0.0.2
+sudo dnsproxy -a "*.a.com:127.0.0.1" "*.b.a.com:127.0.0.2" "*:127.0.0.3" &
+dig @localhost xx.a.com          # return 127.0.0.1
+dig @localhost xx.b.a.com        # return 127.0.0.2
+dig @localhost any.other.domain  # return 127.0.0.3
 ```
 
 ## Who am I 我是谁
+When "ip" configuration is "localhost", node-dnsproxy returns the requesting host IP address  
+当"ip"配置为"localhost"时，node-dnsproxy 返回请求主机的ip地址 
+When "ip" configuration is "proxyhost", node-dnsproxy returns the binding IP address of the server 
+当"ip"配置为"proxyhost"时，node-dnsproxy 返回服务器绑定的ip地址  
 ``` shell
 # start server on 192.168.1.1
-sudo dnsproxy -a who.am.i:localhost who.you.are:proxyhost &
+sudo dnsproxy -a who.am.i:localhost who.are.you:proxyhost &
 
 # run on 192.168.1.2
 dig @192.168.1.1 who.am.i    # return 192.168.1.2
-dig @192.168.1.1 who.you.are # return 192.168.1.1
+dig @192.168.1.1 who.are.you # return 192.168.1.1
 
 # run on 192.168.1.3
 dig @192.168.1.1 who.am.i   # return 192.168.1.3
-dig @192.168.1.1 who.you.are # return 192.168.1.1
+dig @192.168.1.1 who.are.you # return 192.168.1.1
 ```
