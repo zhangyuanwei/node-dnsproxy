@@ -37,8 +37,8 @@ dig @localhost any.other.domain  # return 127.0.0.3
 
 ## Who am I 我是谁
 When "ip" configuration is "localhost", node-dnsproxy returns the requesting host IP address  
-当"ip"配置为"localhost"时，node-dnsproxy 返回请求主机的ip地址 
-When "ip" configuration is "proxyhost", node-dnsproxy returns the binding IP address of the server 
+当"ip"配置为"localhost"时，node-dnsproxy 返回请求主机的ip地址   
+When "ip" configuration is "proxyhost", node-dnsproxy returns the binding IP address of the server   
 当"ip"配置为"proxyhost"时，node-dnsproxy 返回服务器绑定的ip地址  
 ``` shell
 # start server on 192.168.1.1
